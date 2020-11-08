@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Recipe App</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Recipe App</h1>
+      <form>
+        <!-- Keyword Search -->
+        <input type="text" placeholder="Search by ingredient" required="true" id="js-search-term">
+        
+        <!-- Buttons -->
+        <input type="submit" value="Submit">
+        <input type="button" value="Reload" onClick="window.location.reload();">
+      </form>
+      <section class="results hidden">
+        <article class="list">
+          <div class="recipe placeholder">Placeholder</div>
+        </article>
+      </section>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
