@@ -16,3 +16,9 @@ body{
 .hidden{
     display: none;
 }
+
+.recipe{
+    padding: 24px 0;
+    margin: 24px 0;
+    border-bottom: 1px solid lightgray;
+}

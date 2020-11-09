@@ -10,8 +10,26 @@ function formatQueryParams(params) {
 }
 
 function displayResults(responseJson) {
+  $('.results').empty().append('<article class="list"></article>');
 
-  $('.results').removeClass('hidden')
+  const summary =  $('#js-options :checked').map( function(){
+    return $(this).val()
+  }).get().join(' + ');
+  const searchQuery = $('#js-search-term').val();
+
+
+  
+  console.log(summary.length);
+  // Search query
+  $('.results').removeClass('hidden').prepend(
+    `<div class="summary">
+        <h3>Results for ${searchQuery} <span id="extras" class="hidden"> + </span>${summary}</h3>
+      </div>
+    `
+  )
+  if (summary.length > 0) {
+    $('#extras').removeClass('hidden');
+  }
   $('.list').empty()
   for (let i = 0; i < responseJson.hits.length; i++ ){
     console.log(responseJson.hits[i].recipe.label)
@@ -19,8 +37,12 @@ function displayResults(responseJson) {
       <div class="recipe">
         <img class="photo" src="${responseJson.hits[i].recipe.image}">
         <h3>${responseJson.hits[i].recipe.label}</h3>
-        <p>${responseJson.hits[i].recipe.source}</p>
-        <a href="${responseJson.hits[i].recipe.url}" target="_blank">Link</a>
+        <a href="${responseJson.hits[i].recipe.url}" target="_blank">${responseJson.hits[i].recipe.source}</a>
+        <div class="recipe-data">
+          <p>Servings: ${responseJson.hits[i].recipe.yield}</p>
+          <p>Labels: ${responseJson.hits[i].recipe.healthLabels}</p>
+        </div>
+        <a href="#">View Recipe</a>
       </div>
     `)
   }
@@ -32,7 +54,7 @@ function getRecipes(query, optionCalories, healthOptions, dietOptions) {
     q: query,
     'app_id': '336c7cc0',
     'app_key': apiKey,
-    calories: optionCalories,
+    calories: '0-' + optionCalories,
     health: healthOptions,
     diet: dietOptions
   };
@@ -57,6 +79,7 @@ function getRecipes(query, optionCalories, healthOptions, dietOptions) {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
   console.log(url);
+
 }
 
 function watchForm() {
@@ -65,20 +88,25 @@ function watchForm() {
 
     // Form Options
     let healthChecks = []
-    $(`#js-health :checkbox[name='health']:checked`).each(function () {
+    $(`#js-options :checkbox[name='health']:checked`).each(function () {
       healthChecks.push($(this).val());
     });
     let dietChecks = []
-    $(`#js-diet :checkbox[name='diet']:checked`).each(function () {
+    $(`#js-options :checkbox[name='diet']:checked`).each(function () {
       dietChecks.push($(this).val());
     });
 
+    // Form Inputs
     const searchTerm = $('#js-search-term').val();
     const optionCalories = $('#js-calories').val();
     const healthOptions = $.makeArray(healthChecks).join('&health=');
-    const dietOptions = $.makeArray(dietChecks).join('&health=');
-    console.log(healthOptions);
+    const dietOptions = $.makeArray(dietChecks).join('&diet=');
+    
     getRecipes(searchTerm, optionCalories, healthOptions, dietOptions);
+
+
+
+
     displayResults();
   })
 }

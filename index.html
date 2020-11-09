@@ -33,28 +33,50 @@
           </datalist>
           <label for="calories">Calories</label>
         </div>
-        <fieldset class="options" id="js-health">
+        <fieldset class="options" id="js-options">
           <div class="option">
             <input type="checkbox" name="health" value="">
-            <label for="none">None</label>
+            <label>None</label>
           </div>
           <div class="option">
             <input type="checkbox" name="health" value="peanut-free">
-            <label for="peanut-free">Peanut-free</label>
+            <label>Peanut-free</label>
           </div>
           <div class="option">
             <input type="checkbox" name="health" value="vegan">
-            <label for="vegan">Vegan</label>
+            <label>Vegan</label>
           </div>
-        </fieldset>
-        <fieldset class="options" id="js-diet">
           <div class="option">
-            <input type="checkbox" name="diet" value="">
-            <label for="none">None</label>
+            <input type="checkbox" name="health" value="vegetarian">
+            <label>Vegetarian</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="health" value="sugar-conscious">
+            <label>Sugar-conscious</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="health" value="tree-nut-free">
+            <label>Tree-nut-free</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="health" value="alcohol-free">
+            <label>Alcohol-free</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="diet" value="balanced">
+            <label>Balanced</label>
           </div>
           <div class="option">
             <input type="checkbox" name="diet" value="high-protein">
-            <label for="high-protein">High-Protein</label>
+            <label>High-Protein</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="diet" value="low-fat">
+            <label>Low-fat</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="diet" value="low-carb">
+            <label>Low-carb</label>
           </div>
         </fieldset>
 
@@ -63,6 +85,9 @@
         <input type="button" value="Reload" onClick="window.location.reload();">
       </form>
       <section class="results hidden">
+        <div class="summary">
+
+        </div>
         <article class="list">
           <div class="recipe placeholder">Placeholder</div>
         </article>
