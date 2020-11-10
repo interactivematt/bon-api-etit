@@ -1,7 +1,6 @@
 'use strict';
 
-const apiKey = '3b6fad00a2c74ff824beeac05b9f2b8f';
-const searchURL = 'https://api.edamam.com/search';
+
 
 function formatQueryParams(params) {
   const queryItems = Object.keys(params)
@@ -16,8 +15,6 @@ function displayResults(responseJson) {
     return $(this).val()
   }).get().join(' + ');
   const searchQuery = $('#js-search-term').val();
-
-
   
   console.log(summary.length);
   // Search query
@@ -33,6 +30,9 @@ function displayResults(responseJson) {
   $('.list').empty()
   for (let i = 0; i < responseJson.hits.length; i++ ){
     console.log(responseJson.hits[i].recipe.label)
+    let uri = responseJson.hits[i].recipe.uri
+    let identifier = uri.replace("http://www.edamam.com/ontologies/edamam.owl#recipe_", "")
+    console.log(responseJson.hits[i].recipe.uri)
     $('.list').append(`
       <div class="recipe">
         <img class="photo" src="${responseJson.hits[i].recipe.image}">
@@ -42,13 +42,26 @@ function displayResults(responseJson) {
           <p>Servings: ${responseJson.hits[i].recipe.yield}</p>
           <p>Labels: ${responseJson.hits[i].recipe.healthLabels}</p>
         </div>
-        <a href="#">View Recipe</a>
+        <button onClick="postPDF('${responseJson.hits[i].recipe.url}')">Save as PDF</button>
+        <div class="detail">
+          <ul class="ingredients ${identifier}">
+          </ul>
+          <ol class="instructions ${identifier}">
+          </ol>
+        </div>
       </div>
     `)
+    const ingredientLines = responseJson.hits[i].recipe.ingredientLines
+    
+    $.each(ingredientLines, function(index, value) {
+      $(`ul.${identifier}`).append(`<li>${value}</li>`)
+    });
   }
 }
 
 function getRecipes(query, optionCalories, healthOptions, dietOptions) {
+  const apiKey = '3b6fad00a2c74ff824beeac05b9f2b8f';
+  const searchURL = 'https://api.edamam.com/search';
   // Params for query
   const params = {
     q: query,
@@ -79,8 +92,24 @@ function getRecipes(query, optionCalories, healthOptions, dietOptions) {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
   console.log(url);
+}
+
+function postPDF(documentURL){
+
+  const access_key = 'd5e7a05ccf3022c6f93594ecc789bf47'
+  const postURL = 'http://api.pdflayer.com/api/convert';
+
+  const url = postURL + '?access_key=' + access_key + '&document_url=' + documentURL;
+  fetch(url)
+  .then(response => response.text())
+  .then(result => 
+    window.location.href=`${url}`
+  )
+  .catch(error => console.log('error', error));
+  console.log("try this")
 
 }
+
 
 function watchForm() {
   $('form').submit(event => {
@@ -103,10 +132,6 @@ function watchForm() {
     const dietOptions = $.makeArray(dietChecks).join('&diet=');
     
     getRecipes(searchTerm, optionCalories, healthOptions, dietOptions);
-
-
-
-
     displayResults();
   })
 }
