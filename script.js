@@ -97,7 +97,7 @@ function getRecipes(query, optionCalories, healthOptions, dietOptions) {
 function postPDF(documentURL){
 
   const access_key = 'd5e7a05ccf3022c6f93594ecc789bf47'
-  const postURL = 'http://api.pdflayer.com/api/convert';
+  const postURL = 'https://api.pdflayer.com/api/convert';
 
   const params = {
     '?access_key': access_key,
