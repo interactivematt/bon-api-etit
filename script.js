@@ -99,14 +99,26 @@ function postPDF(documentURL){
   const access_key = 'd5e7a05ccf3022c6f93594ecc789bf47'
   const postURL = 'http://api.pdflayer.com/api/convert';
 
-  const url = postURL + '?access_key=' + access_key + '&document_url=' + documentURL;
+  const params = {
+    '?access_key': access_key,
+    document_url: documentURL,
+    'document_name': 'recipe',
+    // 'test': 1,
+    'no_images': 1,
+    'no_hyperlinks': 1,
+    'no_javascript': 1,
+    'use_print_media': 1,
+    'delay': 0
+  }
+  const queryString = formatQueryParams(params)
+  const url = postURL + queryString
   fetch(url)
   .then(response => response.text())
   .then(result => 
-    window.location.href=`${url}`
+    window.location.assign(url)
   )
   .catch(error => console.log('error', error));
-  console.log("try this")
+  console.log(url)
 
 }
 
