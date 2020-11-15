@@ -216,6 +216,7 @@ fieldset .option{
 .buttons{
   margin: 16px 0;
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -227,6 +228,8 @@ fieldset .option{
   margin: 0;
   visibility: visible;
   display: flex;
+  width: 100%;
+  text-align: center;
 }
 
 .show:hover > p {
@@ -244,8 +247,9 @@ fieldset .option{
   padding: 8px 16px;
   border-radius: 20px;
   border: 1px solid transparent;
-  margin-left: 16px;
+  margin: 8px 0;
   font-size: 1.125rem;
+  width: 100%;
 }
 .primary{
   background: #BA181B;
@@ -307,13 +311,10 @@ a:hover{
 .recipe-data{
   flex: 1;
   padding: 16px;
-  
 }
 
 .recipe > .buttons{
   box-sizing: border-box;
-  padding: 0 16px;
-  align-self: end;
   margin-top: 0;
 }
 
@@ -328,8 +329,8 @@ a:hover{
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.125);
 }
 
-.recipe:hover > .buttons > p {
-  opacity: 1;
+.recipe > .buttons > .btn {
+  
 }
 
 /* Responsive */ 
@@ -337,6 +338,14 @@ a:hover{
   .recipe{
     flex: 2;
     margin: 0 16px 16px 0;
+  }
+  .buttons{
+    flex-direction: row;
+  }
+  .btn{
+    width: auto;
+    margin: 0;
+    margin-left: 16px;
   }
 }
 

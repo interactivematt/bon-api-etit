@@ -43,9 +43,8 @@ function displayResults(responseJson) {
           <p><b>Labels:</b> ${responseJson.hits[i].recipe.healthLabels}</p>
         </div>
         <div class="buttons">
-          <p class="view"><i class="fas fa-external-link-alt"></i>
-          </p>
-          <input id="save" class="btn primary" type="button" value="Save PDF" onClick="postPDF('${responseJson.hits[i].recipe.url}')">
+          
+          <input id="save" class="btn secondary" type="button" value="Save PDF" onClick="postPDF('${responseJson.hits[i].recipe.url}')">
           </div>
       </div>
     `)
