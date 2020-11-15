@@ -9,3 +9,4 @@ App to search for recipes based on keyword and dietary restrictions, then save t
 - This app uses HTML, CSS, and JS (and jQuery)
 - Edamam API used for Recipe Search
 - pdflayer API used for PDF download
+- Adobe Fonts used for fonts (Freight Pro + Franklin Gothic URW)
