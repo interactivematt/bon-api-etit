@@ -3,86 +3,82 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Recipe App</title>
+    <title>Bon API-étit</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link rel="stylesheet" href="https://use.typekit.net/ibh2lxr.css">
   </head>
   <body>
     <div class="container">
-      <h1>Recipe App</h1>
+      <header>
+        <h1><a href="index.html">Bon API-étit</a></h1>
+        <h2>The easiest way to find and download recipes</h2>
+      </header>
       <form>
         <!-- Keyword Search -->
-        <input type="text" placeholder="Search by ingredient" required="true" id="js-search-term">
-
-        <!-- Options -->
-        <div class="option">
-          <input type="range" value="1000" id="js-calories" name="calories" min="0" max="2000" step="200" list="tickmarks" oninput="this.nextElementSibling.value = this.value">
-          <output>1000</output>
-          <datalist id="tickmarks">
-            <option value="0"></option>
-            <option value="200"></option>
-            <option value="400"></option>
-            <option value="600"></option>
-            <option value="800"></option>
-            <option value="1000"></option>
-            <option value="1200"></option>
-            <option value="1400"></option>
-            <option value="1600"></option>
-            <option value="1800"></option>
-            <option value="2000"></option>
-          </datalist>
-          <label for="calories">Calories</label>
+        <div id="search">
+          <h3>Start here</h3>
+          <label>Enter a recipe or ingredients</label>
+          <i class="fas fa-search"></i>
+          <input type="search" placeholder="Ex: chicken alfredo, chocolate cake, whiskey sour" required="true" id="js-search-term">
         </div>
-        <fieldset class="options" id="js-options">
-          <div class="option">
-            <input type="checkbox" name="health" value="">
-            <label>None</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="health" value="peanut-free">
-            <label>Peanut-free</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="health" value="vegan">
-            <label>Vegan</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="health" value="vegetarian">
-            <label>Vegetarian</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="health" value="sugar-conscious">
-            <label>Sugar-conscious</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="health" value="tree-nut-free">
-            <label>Tree-nut-free</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="health" value="alcohol-free">
-            <label>Alcohol-free</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="diet" value="balanced">
-            <label>Balanced</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="diet" value="high-protein">
-            <label>High-Protein</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="diet" value="low-fat">
-            <label>Low-fat</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" name="diet" value="low-carb">
-            <label>Low-carb</label>
-          </div>
-        </fieldset>
+        <!-- Options -->
+          
+          <div id="extras">
+            <div id="calories">
+              <label>Enter calorie range</label>
+              <input type="number" class="calories" id="js-calorie-min" placeholder="0" step="100" min="0" value="0">
+              <span>to</span>
+              <input type="number" class="calories" id="js-calorie-max" placeholder="2000" step="100" max="2000" value="2000">
+            </div>
+            <div id="dietary">
+              <label>Select diet options</label>
+              <fieldset id="js-options">
+                <div class="inner">
+                  <div class="option">
+                    <label><input type="checkbox" name="health" value="peanut-free"><span>Peanut-free</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="health" value="vegan"><span>Vegan</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="health" value="vegetarian"><span>Vegetarian</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="health" value="sugar-conscious"><span>Sugar-conscious</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="health" value="tree-nut-free"><span>Tree-nut-free</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="health" value="alcohol-free"><span>Alcohol-free</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="diet" value="balanced"><span>Balanced</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="diet" value="high-protein"><span>High-protein</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="diet" value="low-fat"><span>Low-fat</span></label>
+                  </div>
+                  <div class="option">
+                    <label><input type="checkbox" name="diet" value="low-carb"><span>Low-carb</span></label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>        
 
         <!-- Buttons -->
-        <input type="submit" value="Submit">
-        <input type="button" value="Reload" onClick="window.location.reload();">
+        <div class="buttons">
+          <label class="show"><p>Show options</p><i class="fas fa-chevron-up flip"></i><hr></hr></label>
+          
+          <input class="btn secondary" type="button" value="Start over" onClick="window.location.reload();">
+          <input class="btn primary" type="submit" value="Find recipes">
+        </div>
+        
       </form>
       <section class="results hidden">
         <div class="summary">
@@ -91,8 +87,12 @@
           <div class="recipe placeholder">Placeholder</div>
         </article>
       </section>
+      <section class="results placeholder">
+        <h3>Hint: try searching in the box above</h3>
+      </section>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/8c8bd573cc.js" crossorigin="anonymous"></script>
   </body>
 </html>

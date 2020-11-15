@@ -20,12 +20,12 @@ function displayResults(responseJson) {
   // Search query
   $('.results').removeClass('hidden').prepend(
     `<div class="summary">
-        <h3>Results for ${searchQuery} <span id="extras" class="hidden"> + </span>${summary}</h3>
+        <h3>${responseJson.hits.length} results for ${searchQuery} <span id="plus" class="hidden"> + </span>${summary}</h3>
       </div>
     `
   )
   if (summary.length > 0) {
-    $('#extras').removeClass('hidden');
+    $('#plus').removeClass('hidden');
   }
   $('.list').empty()
   for (let i = 0; i < responseJson.hits.length; i++ ){
@@ -34,32 +34,27 @@ function displayResults(responseJson) {
     let identifier = uri.replace("http://www.edamam.com/ontologies/edamam.owl#recipe_", "")
     console.log(responseJson.hits[i].recipe.uri)
     $('.list').append(`
-      <div class="recipe">
-        <img class="photo" src="${responseJson.hits[i].recipe.image}">
-        <h3>${responseJson.hits[i].recipe.label}</h3>
-        <a href="${responseJson.hits[i].recipe.url}" target="_blank">${responseJson.hits[i].recipe.source}</a>
+      <div class="recipe ${identifier}" >
+        <div class="photo"><img src="${responseJson.hits[i].recipe.image}"></div>
         <div class="recipe-data">
-          <p>Servings: ${responseJson.hits[i].recipe.yield}</p>
-          <p>Labels: ${responseJson.hits[i].recipe.healthLabels}</p>
+          <h3>${responseJson.hits[i].recipe.label}</h3>
+          <h4>From <a href="${responseJson.hits[i].recipe.url}" target="_blank">${responseJson.hits[i].recipe.source}</a></h4>
+          <p><b>Servings:</b> ${responseJson.hits[i].recipe.yield}</p>
+          <p><b>Labels:</b> ${responseJson.hits[i].recipe.healthLabels}</p>
         </div>
-        <button onClick="postPDF('${responseJson.hits[i].recipe.url}')">Save as PDF</button>
-        <div class="detail">
-          <ul class="ingredients ${identifier}">
-          </ul>
-          <ol class="instructions ${identifier}">
-          </ol>
-        </div>
+        <div class="buttons">
+          <p class="view"><i class="fas fa-external-link-alt"></i>
+          </p>
+          <input id="save" class="btn primary" type="button" value="Save PDF" onClick="postPDF('${responseJson.hits[i].recipe.url}')">
+          </div>
       </div>
     `)
-    const ingredientLines = responseJson.hits[i].recipe.ingredientLines
-    
-    $.each(ingredientLines, function(index, value) {
-      $(`ul.${identifier}`).append(`<li>${value}</li>`)
-    });
   }
+
+  
 }
 
-function getRecipes(query, optionCalories, healthOptions, dietOptions) {
+function getRecipes(query, calorieMin, calorieMax, healthOptions, dietOptions) {
   const apiKey = '3b6fad00a2c74ff824beeac05b9f2b8f';
   const searchURL = 'https://api.edamam.com/search';
   // Params for query
@@ -67,7 +62,9 @@ function getRecipes(query, optionCalories, healthOptions, dietOptions) {
     q: query,
     'app_id': '336c7cc0',
     'app_key': apiKey,
-    calories: '0-' + optionCalories,
+    from: 0,
+    to: 100,
+    calories: calorieMin + '-' + calorieMax,
     health: healthOptions,
     diet: dietOptions
   };
@@ -139,13 +136,25 @@ function watchForm() {
 
     // Form Inputs
     const searchTerm = $('#js-search-term').val();
-    const optionCalories = $('#js-calories').val();
+    const optionCalories = `$('#js-calorie-min').val();' + ' - ' + $('#js-calorie-max').val();`
+    const calorieMin = $('#js-calorie-min').val();
+    const calorieMax = $('#js-calorie-max').val();
     const healthOptions = $.makeArray(healthChecks).join('&health=');
     const dietOptions = $.makeArray(dietChecks).join('&diet=');
     
-    getRecipes(searchTerm, optionCalories, healthOptions, dietOptions);
+    getRecipes(searchTerm, calorieMin, calorieMax, healthOptions, dietOptions);
     displayResults();
   })
 }
+
+$(".show").click(function(){
+  $("#extras").toggle(500);
+  $(this).find('i').toggleClass('flip');
+  $(this).find('p').text($(this).find('p').text() == 'Show options' ? 'Hide options' : 'Show options');
+});
+
+
+
+
 
 $(watchForm);
