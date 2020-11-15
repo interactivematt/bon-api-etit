@@ -230,9 +230,13 @@ fieldset .option{
   display: flex;
   width: 100%;
   text-align: center;
+  cursor: pointer;
+}
+.show > span{
+  margin-right: 8px;
 }
 
-.show:hover > p {
+.show:hover > span {
   text-decoration: underline;
 }
 .buttons p{
@@ -280,11 +284,12 @@ a:hover{
 
 /* Cards */
 .list{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: auto;
   width: 100%;
-  justify-content: first;
+  row-gap: 16px;
+  column-gap: 16px;
 }
 .recipe{
   display: flex;
@@ -294,8 +299,16 @@ a:hover{
   box-sizing: border-box;
   border-radius: 8px;
   position: relative;
-  margin: 0 0 16px 0;
   align-content: space-between;
+}
+
+.recipe > .buttons {
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.recipe > .buttons > .btn{
+  margin-left: 0;
 }
 
 .photo{
@@ -313,11 +326,6 @@ a:hover{
   padding: 16px;
 }
 
-.recipe > .buttons{
-  box-sizing: border-box;
-  margin-top: 0;
-}
-
 .view{
   color: #282424;
   opacity: 0;
@@ -329,15 +337,10 @@ a:hover{
   box-shadow: 0 4px 16px 0 rgba(0,0,0,.125);
 }
 
-.recipe > .buttons > .btn {
-  
-}
-
 /* Responsive */ 
 @media screen and (min-width:640px) {
-  .recipe{
-    flex: 2;
-    margin: 0 16px 16px 0;
+  .list{
+    grid-template-columns: repeat(2, 1fr);
   }
   .buttons{
     flex-direction: row;
@@ -347,13 +350,14 @@ a:hover{
     margin: 0;
     margin-left: 16px;
   }
+
 }
 
 @media screen and (min-width:960px) {
   .container{
     max-width: 1280px;
   }
-  .recipe{
-    flex: 3;
+  .list{
+    grid-template-columns: repeat(3, 1fr);
   }
 }

@@ -1,32 +1,31 @@
 'use strict';
 
-
-
+// Formatting the query params for API
 function formatQueryParams(params) {
   const queryItems = Object.keys(params)
     .map(key => `${encodeURI(key)}=${encodeURI(params[key])}`)
   return queryItems.join('&');
 }
 
+// Displaying results in the DOM
 function displayResults(responseJson) {
+  
+  // Empty the results list
   $('.results').empty().append('<article class="list"></article>');
-
+  
+  // Show summary of query in DOM
   const summary =  $('#js-options :checked').map( function(){
     return $(this).val()
   }).get().join(' + ');
   const searchQuery = $('#js-search-term').val();
-  
-  console.log(summary.length);
-  // Search query
   $('.results').removeClass('hidden').prepend(
-    `<div class="summary">
-        <h3>${responseJson.hits.length} results for ${searchQuery} <span id="plus" class="hidden"> + </span>${summary}</h3>
-      </div>
-    `
-  )
+    `<h3 class="summary">${responseJson.hits.length} results for ${searchQuery} <span id="plus" class="hidden"> + </span>${summary}</h3>
+  `);
   if (summary.length > 0) {
     $('#plus').removeClass('hidden');
   }
+
+  // Populate list based on API
   $('.list').empty()
   for (let i = 0; i < responseJson.hits.length; i++ ){
     console.log(responseJson.hits[i].recipe.label)
@@ -43,16 +42,13 @@ function displayResults(responseJson) {
           <p><b>Labels:</b> ${responseJson.hits[i].recipe.healthLabels}</p>
         </div>
         <div class="buttons">
-          
           <input id="save" class="btn secondary" type="button" value="Save PDF" onClick="postPDF('${responseJson.hits[i].recipe.url}')">
-          </div>
+        </div>
       </div>
-    `)
-  }
-
-  
+    `)};
 }
 
+// Get recipes from Recipe API
 function getRecipes(query, calorieMin, calorieMax, healthOptions, dietOptions) {
   const apiKey = '3b6fad00a2c74ff824beeac05b9f2b8f';
   const searchURL = 'https://api.edamam.com/search';
@@ -75,7 +71,7 @@ function getRecipes(query, calorieMin, calorieMax, healthOptions, dietOptions) {
   // Create URL
   const queryString = formatQueryParams(params)
   const url = searchURL + '?' + queryString
-
+  // Fetch
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -90,8 +86,8 @@ function getRecipes(query, calorieMin, calorieMax, healthOptions, dietOptions) {
   console.log(url);
 }
 
+// Post PDF to PDF API
 function postPDF(documentURL){
-
   const access_key = 'd5e7a05ccf3022c6f93594ecc789bf47'
   const postURL = 'https://api.pdflayer.com/api/convert';
 
@@ -115,10 +111,9 @@ function postPDF(documentURL){
   )
   .catch(error => console.log('error', error));
   console.log(url)
-
 }
 
-
+// Function to watch form search + options, and pass arguments
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
@@ -146,14 +141,12 @@ function watchForm() {
   })
 }
 
+// Toggle to show/hide options in DOM
 $(".show").click(function(){
   $("#extras").toggle(500);
   $(this).find('i').toggleClass('flip');
-  $(this).find('p').text($(this).find('p').text() == 'Show options' ? 'Hide options' : 'Show options');
+  $(this).find('span').text($(this).find('span').text() == 'Show options' ? 'Hide options' : 'Show options');
 });
 
-
-
-
-
+// Callback
 $(watchForm);

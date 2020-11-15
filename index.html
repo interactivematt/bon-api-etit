@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -21,7 +21,7 @@
           <h3>Start here</h3>
           <label>Enter a recipe or ingredients</label>
           <i class="fas fa-search"></i>
-          <input type="search" placeholder="Ex: chicken alfredo, chocolate cake, whiskey sour" required="true" id="js-search-term">
+          <input type="search" placeholder="Ex: chicken alfredo, chocolate cake, whiskey sour" required id="js-search-term">
         </div>
         <!-- Options -->
           
@@ -73,7 +73,7 @@
 
         <!-- Buttons -->
         <div class="buttons">
-          <label class="show"><p>Show options</p><i class="fas fa-chevron-up flip"></i><hr></hr></label>
+          <p class="show"><span>Show options</span> <i class="fas fa-chevron-up flip"></i></p>
           
           <input class="btn secondary" type="button" value="Start over" onClick="window.location.reload();">
           <input class="btn primary" type="submit" value="Find recipes">
@@ -81,14 +81,10 @@
         
       </form>
       <section class="results hidden">
-        <div class="summary">
-        </div>
+        
         <article class="list">
           <div class="recipe placeholder">Placeholder</div>
         </article>
-      </section>
-      <section class="results placeholder">
-        <h3>Hint: try searching in the box above</h3>
       </section>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
