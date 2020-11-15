@@ -1,6 +1,6 @@
 # Bon API-étit
 
-[Live demo](interactivematt.github.io/bon-api-etit)
+[Live demo](https://interactivematt.github.io/bon-api-etit)
 
 ## Description
 App to search for recipes based on keyword and dietary restrictions, then save them as PDFs!
